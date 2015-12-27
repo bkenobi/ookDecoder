@@ -19,3 +19,4 @@ Ray Wang's Acurite 592TX code:
 ookDecode sourced from (but based on JeeLabs):
   https://github.com/Cactusbone/ookDecoder
   http://jeelabs.net/projects/cafe/wiki/Decoding_the_Oregon_Scientific_V2_protocol
+
