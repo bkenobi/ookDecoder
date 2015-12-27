@@ -1,4 +1,4 @@
-# ookDecode
+# ookDecoder
 Arduino decoder for multiple 433MHz wireless sensors
 
 Currently supported sensors:
