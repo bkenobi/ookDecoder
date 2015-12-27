@@ -1,5 +1,5 @@
 # ookDecode
-Arduino decoder for multipls 433MHz wireless sensors
+Arduino decoder for multiple 433MHz wireless sensors
 
 Currently supported sensors:
  * Blueline power meter reader
