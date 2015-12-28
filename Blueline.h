@@ -164,11 +164,8 @@ public:
     uint8_t RxLast (void) {
       return g_RxLast;
     }
-/*    
-    void PrintHeader (void) {
-      Serial.print("Energy kWh, Power W, Temp F, Battery, ");
-    }
-*/
+
+    //Generate MQTT report and reset g_RxWatts so we don't print same data multiple times
     void MQTTreport (char* packet) {
       int batt=0;
       
@@ -180,8 +177,19 @@ public:
           g_RxWattHours, g_RxWatts, g_RxTemperature, batt);
         
         g_RxWatts = -99;
-        
-        //Serial.println(packet);
+      }
+    }
+
+    //Generate report for debugging
+    void Report (char* packet) {
+      int batt=0;
+      
+      sprintf(packet,"");
+      
+      if (g_RxWatts != -99) {
+        if (g_battStatus) batt=1;
+        sprintf(packet, "TotalEnergy=%u,CurrentPower=%u,TempF=%u,Battery=%u",
+          g_RxWattHours, g_RxWatts, g_RxTemperature, batt);
       }
     }
     
@@ -233,7 +241,7 @@ public:
         break;
       }
       
-      MQTTreport(packet);
+      Report(packet);
       Serial.print("Blueline: ");
       Serial.println(packet);
     }

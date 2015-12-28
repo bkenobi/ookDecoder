@@ -178,7 +178,7 @@ public:
           batteryok = ((data[2] & 0x40) >> 6);
         }
         
-        MQTTreport(packet);
+        Report(packet);
         Serial.print("Acurite 5n1: ");
         Serial.println(packet);
       }
@@ -255,11 +255,7 @@ public:
       return in * 25.4;
     }
 
-/*
-    void PrintHeader(void) {
-      Serial.print("Windspeed mph, Wind direction, rainfall in, Temperature F, Humidity %RH, Battery, ");
-    }
-*/    
+    //Generate MQTT report and set wind speed to -99 so we don't report same data again
     void MQTTreport (char* packet) {
       float windspeed = convKphMph(windspeedkph);
       char str_temp[10];
@@ -279,8 +275,27 @@ public:
           str_winds, str_windd, str_rain, str_temp, humidity, batteryok);
         
         windspeedkph = -99;
+      }
+    }
+
+    //Generate internal debugging report
+    void Report (char* packet) {
+      float windspeed = convKphMph(windspeedkph);
+      char str_temp[10];
+      char str_winds[10];
+      char str_windd[10];
+      char str_rain[10];
+      
+      sprintf(packet,"");
+      
+      if (windspeedkph != -99) {
+        dtostrf(tempf,5,1,str_temp);
+        dtostrf(windspeed,5,1,str_winds);
+        dtostrf(winddir,4,1,str_windd);
+        dtostrf(rainfall,5,2,str_rain);
         
-        //Serial.println(packet);
+        sprintf(packet,"Windspeed=%s,Winddir=%s,Rainfall=%s,TempF=%s,Humidity=%u,Battery=%u",
+          str_winds, str_windd, str_rain, str_temp, humidity, batteryok);
       }
     }
 };

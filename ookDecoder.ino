@@ -1,3 +1,5 @@
+#define VERSION "v0.9 20151228"
+
 #include <util/atomic.h>
 
 #include <SPI.h>
@@ -97,7 +99,9 @@ void setup () {
     Ethernet.begin(mac, ip);
     if (client.connect("arduinoClient")) {
       client.publish("ookDecoder", "online");
+      client.publish("ookDecoder", VERSION);
       Serial.println("ookDecoder started");
+      Serial.println(VERSION);
     }
 }
 
@@ -108,6 +112,9 @@ void loop () {
     if(currentMillis - previousMillis > REPORT_TIME) {
       previousMillis = currentMillis;  
       if (client.connect("arduinoClient")) {
+        Serial.println("connected to arduinoClient");
+        client.publish("ookDecoder","report");
+        
         blueline.MQTTreport(packet);
         if (strlen(packet) > 0) {
           client.publish("blueline",packet);

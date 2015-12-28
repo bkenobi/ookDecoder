@@ -249,7 +249,7 @@ public:
         batteryCok=true;  
         
       
-        MQTTreport(packet);
+        Report(packet);
         Serial.print("Acurite 592TX: ");
         Serial.println(packet);
         
@@ -305,24 +305,36 @@ public:
       }
     }
     
+    //Generate MQTT report and set temps to -99 so we don't report same data again
     void MQTTreport (char* packet) {
-      
       sprintf(packet,"");
       
       if (tempA != -99) {
         sprintf(packet,"TempA=%d,BatteryA=%d", tempA, batteryAok);
         tempA = -99;
-        //Serial.print(packet);
       }
       if (tempB != -99) {
         sprintf(packet,",TempB=%d,BatteryB=%d", tempB, batteryBok);
         tempB = -99;
-        //Serial.print(packet);
       }
       if (tempC != -99) {
         sprintf(packet,",TempC=%d,BatteryC=%d", tempC, batteryCok);
         tempC = -99;
-        //Serial.print(packet);
+      }
+    }
+    
+    //Generate internal debug report
+    void Report (char* packet) {
+      sprintf(packet,"");
+      
+      if (tempA != -99) {
+        sprintf(packet,"TempA=%d,BatteryA=%d", tempA, batteryAok);
+      }
+      if (tempB != -99) {
+        sprintf(packet,",TempB=%d,BatteryB=%d", tempB, batteryBok);
+      }
+      if (tempC != -99) {
+        sprintf(packet,",TempC=%d,BatteryC=%d", tempC, batteryCok);
       }
     }
 };
