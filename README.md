@@ -24,3 +24,4 @@ ookDecode sourced from (but based on JeeLabs)
   https://github.com/Cactusbone/ookDecoder
   http://jeelabs.net/projects/cafe/wiki/Decoding_the_Oregon_Scientific_V2_protocol
 
+This project compiles and runs on UNO R2 hardware using Arduino 1.6.1 and PubSubClient 1.9 when connecting to an RPi running Mosquitto 0.15 (MQTT 3.1).  If the client supports MQTT 3.1.1 then newer versions of PubSubClient and thus Arduino IDE are possible.
